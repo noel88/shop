@@ -1,6 +1,5 @@
 package com.shop.demoshop.controller;
 
-import com.shop.demoshop.model.api.request.PageRequest;
 import com.shop.demoshop.model.api.request.ShopRequest;
 import com.shop.demoshop.model.shop.Shop;
 import com.shop.demoshop.repository.ShopRepository;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Optional;
 
@@ -20,12 +18,13 @@ import java.util.Optional;
 @RequestMapping("/api/shop")
 public class ShopBoardRestController {
 
-    @Autowired
     private ShopRepository shopRepository;
-
-    @Autowired
     private FileStorageService fileStorageService;
 
+    public ShopBoardRestController(ShopRepository shopRepository, FileStorageService fileStorageService) {
+        this.shopRepository = shopRepository;
+        this.fileStorageService = fileStorageService;
+    }
 
     //TODO 글 목록조회, 글 등록, 글 보기, 글 수정, 글 삭제
     @GetMapping("/shopList")
