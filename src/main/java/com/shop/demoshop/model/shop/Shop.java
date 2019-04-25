@@ -2,6 +2,7 @@ package com.shop.demoshop.model.shop;
 
 import com.shop.demoshop.model.Auditing;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,8 +24,10 @@ public class Shop extends Auditing {
     private String title;
 
     private String content;
+/*
+    private MultipartFile file;*/
 
-    private String fileName;
+    private String filename;
 
     private int quantity;
 

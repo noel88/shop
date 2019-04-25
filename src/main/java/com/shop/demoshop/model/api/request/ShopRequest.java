@@ -2,6 +2,7 @@ package com.shop.demoshop.model.api.request;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Setter @Getter
 public class ShopRequest {
@@ -11,7 +12,9 @@ public class ShopRequest {
 
     private String content;
 
-    private String fileName;
+  /*  private MultipartFile file;*/
+
+    private String filename;
 
     private int quantity;
 

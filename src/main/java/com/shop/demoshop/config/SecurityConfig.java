@@ -3,7 +3,6 @@ package com.shop.demoshop.config;
 import com.shop.demoshop.model.auth.CustomUserDetailService;
 import com.shop.demoshop.security.JwtAuthenticationEntryPoint;
 import com.shop.demoshop.security.JwtAuthenticationFilter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -72,6 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/auth/**")
                         .permitAll()
                     .antMatchers(HttpMethod.GET)
+                        .permitAll()
+                    .antMatchers("/api/shop/upload")
                         .permitAll()
                 .anyRequest()
                     .authenticated();
