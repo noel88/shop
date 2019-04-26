@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shop Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+</head>
+<body>
+<table class = "table" id = "shopDetailTable"></table>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    var param = getParameterByName('shopNo');
+    var authorization = localStorage.getItem("Authorization");
+
+    function list() {
+        location.href = "/shop/shop/shopList";
+    }
+
+    $.ajax({
+        headers: { "Authorization" : authorization },
+        type: 'post',
+        url:  '/api/shop/shopDetails/' + param,
+        data: 'json',
+        success: function (data) {
+            var price = data.price;
+            var temp = "<tr><td colspan='4'>[" + data.title + "]</td></tr>" +
+                    "<tr><td rowspan='3'>내용</td><td colspan='2' rowspan='3' width='50%;'>" + data.content + "</td>" +
+                    "<td colspan='2'>수량 [" + data.quantity + "개 남음] " +
+                    "<select class = 'form-control' id ='selectQuantity' name = 'selectQuantity' onchange='chageLangSelect(" + data.price +");'>" +
+                    "<option selected>수량선택</option>" +
+                    "<option value=1>1</option>" +
+                    "<option value=2>2</option>" +
+                    "<option value=3>3</option>" +
+                    "<option value=4>4</option>" +
+                    "<option value=5>5</option>" +
+                    "<option value=6>6</option>" +
+                    "<option value=7>7</option>" +
+                    "<option value=8>8</option>" +
+                    "<option value=9>9</option>" +
+                    "<option value=10>10</option>" +
+                    "</select></td>" +
+                    "<tr><td colspan='2'>금액 : " + data.price +"원 [총 결제금액 : <span id = 'setprice'></span>]" ;
+
+                    temp += "<tr><td colspan='2'><button class = 'btn'>구매하기</button></td></tr>" +
+                     "<tr><td colspan='4'><button class = 'btn' onclick='list();'>목록</button></td></tr>";
+
+            $("#shopDetailTable").html(temp);
+
+        }
+
+    });
+
+    function chageLangSelect(price){
+        var langSelect = document.getElementById("selectQuantity").value;
+
+        if(langSelect == null) {
+            setprice.innerText = price + "원";
+        }else {
+            setprice.innerText = langSelect*price + "원";
+        }
+    }
+</script>
+
+
+</body>
+</html>

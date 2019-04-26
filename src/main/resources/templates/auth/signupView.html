@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+</head>
+<body>
+아이디 : <input type = "text" class = "form-control" id = "userId" name = "userId"> <br />
+비밀번호 : <input type = "password" class = "form-control" id = "password" name = "password"> <br />
+비밀번호 : <input type = "password" class = "form-control" id = "re-password" name = "re-password"> <br />
+이름 : <input type = "text" class = "form-control" id = "username" name = "username"> <br />
+이메일 : <input type = "email" class = "form-control" id = "email" name = "email"> <br />
+전화번호 : <input type = "text" class = "form-control" id = "phoneNum" name = "phoneNum"> <br />
+우편번호 : <input type = "text" class = "form-control" id = "zipCode" name = "zipCode"> <br />
+주소 : <input type = "text" class = "form-control" id = "addr" name = "addr"> <br />
+<button class = "btn" onclick = "signup();">회원가입</button>
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    function signup() {
+
+        var signupVal = {
+            userId: $('#userId').val(),
+            password: $('#password').val(),
+            username: $('#username').val(),
+            phoneNum: $('#phoneNum').val(),
+            email: $('#email').val(),
+            zipCode: $('#zipCode').val(),
+            addr: $('#addr').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/api/auth/signup",
+            data: JSON.stringify(signupVal),
+            // dataType: "text",
+            contentType : "application/json",
+            success: function (data) {
+                alert(data);
+                location.href = "/shop/auth/signin";
+            }
+        });
+    }
+</script>
+</body>
+</html>

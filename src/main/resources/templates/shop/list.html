@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop list</title>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+</head>
+<body>
+<div id="init"></div>
+<table class = "table" id = "shopTable">
+
+</table>
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+
+        $.ajax({
+            url: "/api/shop/shopList",
+            data: "json",
+            contentType: "application/json",
+            success: function (data) {
+                if(data == "") {
+                    init.innerText = "등록된 상품이 없습니다";
+                }
+                $.each(data, function () {
+                  var temp = "<thead><tr><th>No</th>" +
+                            "<th>상품명</th>" +
+                            "<th>메인사진</th>" +
+                    /*        "<th>등록날짜</th>" +*/
+                            "<th>수량</th>" +
+                            "<th>가격</th></tr></thead>";
+
+                    for (var i=0; i< data.length; i++) {
+                        temp += "<tbody><tr><td>" + data[i].shopNo + "</td>" +
+                                "<td><a href = '/shop/shop/shopDetails?shopNo=" + data[i].shopNo + "'>" + data[i].title + "</td>" +
+                                "<td>이미지</td>" +
+                         /*       "<td>" + data[i].createAt + "</td>" +*/
+                                "<td>" + data[i].quantity + "</td>" +
+                                "<td>" + data[i].price + "</td></tr></tbody>";
+                    }
+                    $("#shopTable").html(temp);
+                });
+            }
+        });
+
+</script>
+
+
+</body>
+</html>

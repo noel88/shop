@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 페이지</title>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+</head>
+<body>
+
+    아이디 : <input class = "form-control" type = "text" name = "userId" id = "userId" placeholder="아이디를 입력해주세요."><br />
+    패스워드 : <input class = "form-control" type = "password" name = "password" id = "password" placeholder="패스워드를 입력해주세요."><br />
+    <button class = "btn" onclick="signinAjax();">로그인</button>
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+
+/*    var userId = $('#userId').val();
+    var password = $('#password').val();*/
+
+/*    console.log(userId + password + "아이디 패스워드 값");*/
+
+    function signinAjax() {
+
+        var signin = {
+            userId: $('#userId').val(),
+            password: $('#password').val()
+        };
+
+        var request = new Headers();
+
+        $.ajax({
+            url : "/api/auth/signin",
+            contentType : "application/json",
+            type : "post",
+            data : JSON.stringify(signin),
+            dataType : "json",
+            success : function (data) {
+               alert(data.tokenType + " "+ data.accessToken);
+               localStorage.setItem("Authorization", data.tokenType + " "+ data.accessToken);
+               // request.append("Authorization", data.tokenType + " "+ data.accessToken);
+               location.href = "/";
+            }
+        })
+
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>qna list</title>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+</head>
+<body>
+<div id="init"></div>
+<table class = "table" id = "qnaTable">
+
+</table>
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+
+        $.ajax({
+            url: "/api/qna/qnaList",
+            data: "json",
+          /*  contentType: "application/json",*/
+            success: function (data) {
+                if(data == "") {
+                    init.innerText = "등록된 질문이 없습니다";
+                }
+                $.each(data, function () {
+                    var temp = "<thead><tr><th>질문</th></tr></thead>";
+
+                    for (var i=0; i< data.length; i++) {
+                        if (data[i].private_yn == 'y') {
+                            temp += "<tbody><tr><td>비밀글입니다.</td></tr></tbody>";
+                        } else {
+                            temp += "<tbody><tr><td><textarea class = 'form-control' rows = 5>" + data[i].qnaContent + "</textarea></td></tr>" +
+                                "<tr><td>" + data[i].writer + "</td></tr></tbody>";
+                        }
+                    }
+                $("#qnaTable").html(temp);
+                });
+            }
+        });
+
+</script>
+
+
+</body>
+</html>
