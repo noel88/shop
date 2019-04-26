@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,7 +26,8 @@ public class QnaBoardRestController {
     @GetMapping("/qnaList")
     public ResponseEntity shopList(Pageable pageable) {
         //TODO pageable 이용하여 페이징 처리
-        Page<Qna> qnaList = qnaRepository.findAll(pageable);
+//        Page<Qna> qnaList = qnaRepository.findAll(pageable);
+        List<Qna> qnaList = qnaRepository.findAll();
         return ResponseEntity.ok(qnaList);
     }
 

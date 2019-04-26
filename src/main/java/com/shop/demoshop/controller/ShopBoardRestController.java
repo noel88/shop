@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,7 +31,8 @@ public class ShopBoardRestController {
     @GetMapping("/shopList")
     public ResponseEntity shopList(Pageable pageable) {
         //TODO pageable 이용하여 페이징 처리
-        Page<Shop> shopList = shopRepository.findAll(pageable);
+//        Page<Shop> shopList = shopRepository.findAll(pageable);
+        List<Shop> shopList = shopRepository.findAll();
         return ResponseEntity.ok(shopList);
     }
 

@@ -10,6 +10,8 @@ import com.shop.demoshop.model.user.User;
 import com.shop.demoshop.repository.RoleRepository;
 import com.shop.demoshop.repository.UserRepository;
 import com.shop.demoshop.security.JwtTokenProvider;
+import com.sun.deploy.net.HttpResponse;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
