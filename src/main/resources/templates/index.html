@@ -21,11 +21,17 @@
          document.write("<a href = '/shop/shop/shopList'>게시판</a><br />");
          document.write("<a href = '/shop/qna/qnaList'>qna</a>");
      }else {
-         document.write("<a href = '/shop/auth/logout'>로그아웃</a><br />");
+         document.write("<a onclick='logout();'>로그아웃</a><br />");
          document.write("<a href = '/shop/shop/shopList'>게시판</a><br />");
          document.write("<a href = '/shop/qna/qnaList'>qna</a>");
          //request.append("Authorization", authorization);
          /*document.write("<a href = '/shop/auth/signup'></a>");*/
+     }
+
+     function logout() {
+         localStorage.removeItem("Authorization");
+         alert("로그아웃되었습니다.");
+         location.href = "/";
      }
 </script>
 </body>
