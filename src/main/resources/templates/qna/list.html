@@ -4,19 +4,97 @@
     <meta charset="UTF-8">
     <title>qna list</title>
     <!-- 합쳐지고 최소화된 최신 CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <!-- 부가적인 테마 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.css">
+    <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css">
+
 </head>
 <body>
-<div id="init"></div>
-<table class = "table" id = "qnaTable">
+<nav id = "nav"></nav>
 
-</table>
+<div style="width: 60%; text-align: center">
+    <div id="init"></div>
+    <table class = "table" id = "qnaTable"></table>
+</div>
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+
+    var authorization = localStorage.getItem("Authorization");
+    //var request = new Headers();
+    if(authorization == null) {
+        var nav = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\n' +
+            '    <a class="navbar-brand" href="#">Navbar</a>\n' +
+            '    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">\n' +
+            '        <span class="navbar-toggler-icon"></span>\n' +
+            '    </button>\n' +
+            '\n' +
+            '    <div class="collapse navbar-collapse" id="navbarColor03">\n' +
+            '        <ul class="navbar-nav mr-auto">\n' +
+            '            <li class="nav-item active">\n' +
+            '                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>\n' +
+            '            </li>\n' +
+            '            <li class="nav-item">\n' +
+            '                <a class="nav-link" href="/shop/shop/shopList">쇼핑몰</a>\n' +
+            '            </li>\n' +
+            '            <li class="nav-item">\n' +
+            '                <a class="nav-link" href="/shop/qna/qnaList">QnA</a>\n' +
+            '            </li>\n' +
+            '            <li class="nav-item">\n' +
+            '                <a class="nav-link" href="/shop/auth/signup">회원가입</a>\n' +
+            '            </li>\n' +
+            '            <li class ="nav-item">\n' +
+            '                <a class ="nav-link" href = "/shop/auth/signin">로그인</a>\n' +
+            '            </li>\n' +
+            '        </ul>\n' +
+            '        <form class="form-inline my-2 my-lg-0">\n' +
+            '            <input class="form-control mr-sm-2" type="text" placeholder="Search">\n' +
+            '            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>\n' +
+            '        </form>\n' +
+            '    </div>\n' +
+            '</nav>';
+        $('#nav').html(nav);
+    }else {
+        var nav = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\n' +
+            '    <a class="navbar-brand" href="#">Navbar</a>\n' +
+            '    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">\n' +
+            '        <span class="navbar-toggler-icon"></span>\n' +
+            '    </button>\n' +
+            '\n' +
+            '    <div class="collapse navbar-collapse" id="navbarColor03">\n' +
+            '        <ul class="navbar-nav mr-auto">\n' +
+            '            <li class="nav-item active">\n' +
+            '                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>\n' +
+            '            </li>\n' +
+            '            <li class="nav-item">\n' +
+            '                <a class="nav-link" href="/shop/shop/shopList">쇼핑몰</a>\n' +
+            '            </li>\n' +
+            '            <li class="nav-item">\n' +
+            '                <a class="nav-link" href="/shop/qna/qnaList">QnA</a>\n' +
+            '            </li>\n' +
+            '            <li class ="nav-item">\n' +
+            '                <a class ="nav-link" onclick="logout();">로그아웃</a>\n' +
+            '            </li>\n' +
+            '        </ul>\n' +
+            '        <form class="form-inline my-2 my-lg-0">\n' +
+            '            <input class="form-control mr-sm-2" type="text" placeholder="Search">\n' +
+            '            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>\n' +
+            '        </form>\n' +
+            '    </div>\n' +
+            '</nav>';
+        $('#nav').html(nav);
+    }
+
+    function logout() {
+        localStorage.removeItem("Authorization");
+        alert("로그아웃되었습니다.");
+        location.href = "/";
+    }
+
+    function mainpage() {
+        location.href = "/";
+    }
 
         $.ajax({
             url: "/api/qna/qnaList",
@@ -31,12 +109,14 @@
 
                     for (var i=0; i< data.length; i++) {
                         if (data[i].private_yn == 'y') {
-                            temp += "<tbody><tr><td>비밀글입니다.</td></tr></tbody>";
+                            temp += "<tbody><tr><td>######## 관리자만 확인 가능한 비밀글입니다. ##########</td></tr>" +
+                                "<tr><td>by - [" +  data[i].qnaNo + "] " + data[i].writer + "</td></tr>";
                         } else {
                             temp += "<tbody><tr><td><textarea class = 'form-control' rows = 5>" + data[i].qnaContent + "</textarea></td></tr>" +
-                                "<tr><td>" + data[i].writer + "</td></tr></tbody>";
+                                "<tr><td>by - [" +  data[i].qnaNo + "] " + data[i].writer + "</td></tr>";
                         }
                     }
+                    temp += "<tr><td><button class = 'btn btn-secondary' onclick='mainpage();'>메인페이지 이동</button></td></tr></tbody>";
                 $("#qnaTable").html(temp);
                 });
             }
